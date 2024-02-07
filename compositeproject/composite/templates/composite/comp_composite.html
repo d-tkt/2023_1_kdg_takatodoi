@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}合成計算{% endblock %}
+
+{% block h1 %}合成計算{% endblock %}
+
+{% block content %}
+    <div class="table-responsive" style="max-width: calc(100% - 20px);">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">アイテム</th>
+                        {% with ''|center:max_len as range %}
+                            {% for _ in range %}
+                                <th scope="col">素材</th>
+                            {% endfor %}
+                        {% endwith %}
+                    <th scope="col">削除</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for items in object_list %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><a href="{% url 'detail-composite' items.comp_item.pk %}"><img src="{{ items.comp_item.thumbnail.url }}" alt="{{ items.comp_item }}" style="width: 75px;"></a> x{{ items.comp_quantity }}</td>
+                            {% for material in items.materials %}
+                                <td><a href="{% url 'detail-composite' material.material.pk %}"><img src="{{ material.material.thumbnail.url }}" alt="{{ material.material }}" style="width: 50px;"></a> x{{ material.quantity }}</td>
+                            {% endfor %}
+                            {% with ''|center:items.none_len as range %}
+                                {% for _ in range %}
+                                    <td>―</td>
+                                {% endfor %}
+                            {% endwith %}
+                        <td><a href="{% url 'delete-compcomp' items.pk %}" class="text-danger">削除</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex">
+        <form method="POST">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-outline-success" value="追加" style="display: inline;">
+        </form>
+        <form method="POST" action="{% url 'delete-compcomp' 0 %}" style="position: absolute; right: 60px;">{% csrf_token %}
+            <input type="submit" class="btn btn-outline-danger" onclick='return confirm("本当に削除しますか？");' value="一括削除">
+        </form>
+    </div>
+    <h2>合計</h2>
+    {% for item in total_materials %}
+        <div class="card">
+            <div class="card-body"><a href="{% url 'detail-composite' item.material.pk %}"><img src="{{ item.material.thumbnail.url }}" style="width: 100%; height: 100%;"></a></div>
+            <div class="card-footer"><nobr><a href="{% url 'detail-composite' item.material.pk %}">{{ item.material }}</a> x {{ item.quantity }}</nobr></div>
+        </div>
+    {% endfor %}
+    {% if previous %}
+        <h2>前回合計</h2>
+        {% for item in previous %}
+            <div class="card">
+                <div class="card-body"><a href="{% url 'detail-composite' item.previous_item.pk %}"><img src="{{ item.previous_item.thumbnail.url }}" style="width: 100%; height: 100%;"></a></div>
+                <div class="card-footer"><nobr><a href="{% url 'detail-composite' item.previous_item.pk %}">{{ item.previous_item }}</a> x {{ item.previous_quantity }}</nobr></div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

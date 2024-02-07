@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}素材削除{% endblock %}
+
+{% block h1 %}素材削除{% endblock %}
+
+{% block content %}
+    <form method="POST">{% csrf_token %}
+        <button type="submit">{{ object.name }}を削除</button>
+    </form>
+{% endblock %}

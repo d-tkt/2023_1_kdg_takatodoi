@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}合成編集{% endblock %}
+
+{% block h1 %}合成編集{% endblock %}
+
+{% block content %}
+    <form method="POST">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">編集</button>
+    </form>
+{% endblock %}

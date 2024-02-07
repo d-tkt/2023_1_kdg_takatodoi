@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}素材一覧{% endblock %}
+
+{% block h1 %}検索：{{ query }}{% endblock %}
+
+{% block content %}
+    {% if object_list %}
+        {% for item in object_list %}
+            <div class="card">
+                <div class="card-header"><a href="{% url 'detail-composite' item.pk %}">{{ item.name }}</a></div>
+                <div class="card-body"><a href="{% url 'detail-composite' item.pk %}"><img src="{{ item.thumbnail.url }}" alt="{{ item }}"></a></div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>　該当するものはありません。</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}素材登録{% endblock %}
+
+{% block h1 %}素材登録{% endblock %}
+
+{% block content %}
+    <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="作成">
+    </form>
+{% endblock %}

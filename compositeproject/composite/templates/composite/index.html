@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}素材表{% endblock %}
+
+{% block h1 %}素材表{% endblock %}
+
+{% block content %}
+    <h2><span class="text-danger">最上級</span>：</h2>
+    {% for item in grouped_items.最上級 %}
+        <div class="card">
+            <div class="card-header"><a href="{% url 'detail-composite' item.pk %}">{{ item.name }}</a></div>
+            <div class="card-body"><a href="{% url 'detail-composite' item.pk %}"><img src="{{ item.thumbnail.url }}"></a></div>
+        </div>
+    {% endfor %}
+
+    <h2><span class="text-warning">上級</span>：</h2>
+    {% for item in grouped_items.上級 %}
+        <div class="card">
+            <div class="card-header"><a href="{% url 'detail-composite' item.pk %}">{{ item.name }}</a></div>
+            <div class="card-body"><a href="{% url 'detail-composite' item.pk %}"><img src="{{ item.thumbnail.url }}"></a></div>
+        </div>
+    {% endfor %}
+
+    <h2><span class="text-success">中級</span>：</h2>
+    {% for item in grouped_items.中級 %}
+        <div class="card">
+            <div class="card-header"><a href="{% url 'detail-composite' item.pk %}">{{ item.name }}</a></div>
+            <div class="card-body"><a href="{% url 'detail-composite' item.pk %}"><img src="{{ item.thumbnail.url }}"></a></div>
+        </div>
+    {% endfor %}
+{% endblock %}

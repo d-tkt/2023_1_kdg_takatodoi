@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}素材詳細{% endblock %}
+
+{% block h1 %}<img src="{{ item.thumbnail.url }}" alt="{{ item.name }}" style="max-width: 75px;"> {{ item_name }}{% endblock %}
+
+{% block content %}
+    <h2>1. 使用素材</h2>
+    {% if composite_items %}
+        <table class="table" style="max-width: 1000px;">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">素材</th>
+                    <th scope="col">必要数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for composite in composite_items %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><a href="{% url 'detail-composite' composite.material.pk %}"><img src="{{ composite.material.thumbnail.url }}" alt="{{ composite.material.name }}" style="width: 50px;">{{ composite.material.name }}</a></td>
+                        <td>{{ composite.quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>　この素材に合成素材はありません。</p>
+    {% endif %}
+    <h2>2. 素材使用</h2>
+    {% if use_items %}
+        <table class="table" style="max-width: 1000px;">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">使用</th>
+                    <th scope="col">使用数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for use in use_items %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><a href="{% url 'detail-composite' use.item.pk%}"><img src="{{ use.item.thumbnail.url }}" alt="{{ use.item.name }}" style="width: 50px;">{{ use.item.name }}</a></td>
+                        <td>{{ use.quantity }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>　この素材を使用する素材はありません。</p>
+    {% endif %}
+    <div class="text-right">
+        <a href="{% url 'search-item' %}" class="btn btn-outline-secondary">一覧</a>
+        <a href="{% url 'update-item' item.pk %}" class="btn btn-outline-primary">編集</a>
+        <a href="{% url 'delete-item' item.pk %}" class="btn btn-outline-danger">削除</a>
+    </div>
+{% endblock %}
