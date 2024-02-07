@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}検索結果{% endblock %}
+
+{% block content %}
+    <h2>検索結果：{{ query }}</h2>
+    {% for item in object_list %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'detail-dictionary' item.title %}">{{ item.title }}</a></h5>
+            </div>
+            <h6 class="card-footer">カテゴリー：<a class="link-dark text-decoration-none" href="{% url 'category-dictionary' item.category %}">{{ item.category }}</a>{% if item.member %} / 所属：{{ item.member | safe }}{% else %}{% endif %}</h6>
+        </div>
+    {% empty %}
+        <p>該当する結果がありません。</p>
+    {% endfor %}
+    {% include 'dictionary/components/pagination.html' %}
+{% endblock %}

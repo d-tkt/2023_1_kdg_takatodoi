@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>ログインページ</h1>
+    <form method="POST" class="card form-group">
+        {% csrf_token %}
+        {% for error in form.errors.values %}
+            {{ error }}
+        {% endfor %}
+        <div class="card-body">
+            <label>ユーザーID</label>
+            <input class="form-control" name="username">
+            <label>パスワード</label>
+            <input type="password" class="form-control" name="password">
+            <button type="submit" class="btn btn-outline-primary mt-4">ログイン</button>
+        </div>
+    </form>
+{% endblock %}

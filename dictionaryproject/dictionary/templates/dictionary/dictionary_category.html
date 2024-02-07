@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ category }}{% endblock %}
+
+{% block content %}
+    <div>
+        <h2>カテゴリー：{{ category }}{% if search_query %} / {{ search_query }}{% endif %}</h2>
+        <form class="d-flex" method="GET" action="{% url 'category-dictionary' category %}">
+            <input class="form-control me-2" type="search" placeholder="In Category Search" aria-label="Search" name="query">
+            <button class="btn btn-outline-primary" type="submit">search</button>
+        </form>
+    </div>
+    
+    {% for item in object_list %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'detail-dictionary' item.title %}">{{ item.title }}</a> </h5>
+            </div>
+            <h6 class="card-footer">カテゴリー：<a class="link-dark text-decoration-none" href="{% url 'category-dictionary' item.category %}">{{ item.category }}</a>{% if item.member %} / 所属：{{ item.member | safe }}{% else %}{% endif %}</h6>
+        </div>
+    {% empty %}
+        <p>該当する結果がありません。</p>
+    {% endfor %}
+    {% include 'dictionary/components/pagination.html' %}
+{% endblock %}

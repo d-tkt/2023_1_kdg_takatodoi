@@ -1,0 +1,8 @@
+.card{
+    margin: 5px;
+    float: left;
+    width: calc(50% - 10px);
+}
+.inline-li {
+display: inline;
+}

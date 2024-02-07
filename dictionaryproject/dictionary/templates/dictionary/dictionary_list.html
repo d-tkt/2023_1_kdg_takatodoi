@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}用語一覧{% endblock %}
+{% block h1 %}用語一覧{% endblock %}
+
+
+{% block content %}
+    <div>
+        {% for item in object_list %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'detail-dictionary' item.title %}">{{ item.title }}</a> </h5>
+                </div>
+                <h6 class="card-footer">カテゴリー：<a class="link-dark text-decoration-none" href="{% url 'category-dictionary' item.category %}">{{ item.category }}</a></h6>
+            </div>
+        {% endfor %}
+    </div>
+    <footer>
+        {% include 'dictionary/components/pagination.html' %}
+    </footer>
+    
+{% endblock %}
